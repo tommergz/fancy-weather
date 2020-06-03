@@ -1,0 +1,15 @@
+#common-wrapper {
+  height: 100vh;
+  background-color: rgba(29, 28, 28, 0.5);
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather, .map {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+}

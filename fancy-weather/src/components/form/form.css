@@ -1,0 +1,67 @@
+:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+   
+  :focus::-moz-placeholder {
+    color: transparent;
+  }
+   
+  :focus:-moz-placeholder {
+    color: transparent;
+  }
+   
+  :focus:-ms-input-placeholder {
+    color: transparent;
+  }
+
+  * {
+    outline: 0 !important;
+  }
+
+.form {
+  display: flex;
+  height: 46px;
+  margin-top: 10px;
+}
+
+.search-input {
+  width: 30%;
+  height: 100%;
+  border: 2px solid rgba(180,184,187,.7);
+  border-radius: .5rem 0 0 .5rem;
+  padding: 1.3rem 1.5rem;
+  background: rgba(76,82,85,.7);
+  font-family: inherit;
+  font-size: 18px;
+  color: #fff;
+  direction: ltr;
+}
+
+.button {
+  width: 10%;
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: .5rem;
+  background: rgba(180,184,187,.7);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  border: 0;
+}
+
+.form .button {
+  border-radius: 0 .5rem .5rem 0;
+}
+
+.button:hover {
+  background-color: rgba(223, 228, 231, 0.7);
+}
