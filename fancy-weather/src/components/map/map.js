@@ -16,7 +16,6 @@ class Map extends React.Component {
     });
   }
   
-  componentDidMount() {  this.newMap()  }
   componentDidUpdate() {  this.newMap()  }
     
   render() {
