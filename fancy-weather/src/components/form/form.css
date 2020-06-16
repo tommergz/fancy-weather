@@ -21,16 +21,17 @@
 .form {
   display: flex;
   height: 46px;
-  margin-top: 10px;
 }
 
+input:focus {outline: 0;}
+
 .search-input {
-  width: 30%;
+  width: 300px;
   height: 100%;
   border: 2px solid rgba(180,184,187,.7);
   border-radius: .5rem 0 0 .5rem;
   padding: 1.3rem 1.5rem;
-  background: rgba(76,82,85,.7);
+  background: rgba(76,82,85,.7) !important;
   font-family: inherit;
   font-size: 18px;
   color: #fff;
@@ -38,23 +39,17 @@
 }
 
 .button {
-  width: 10%;
+  width: 80px;
   height: 100%;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
   align-items: center;
   border-radius: .5rem;
   background: rgba(180,184,187,.7);
-  font-family: inherit;
   font-size: 18px;
   font-weight: 600;
   color: #fff;
   text-transform: uppercase;
-  -webkit-transition: all .2s;
-  transition: all .2s;
   border: 0;
 }
 

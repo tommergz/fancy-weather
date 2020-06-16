@@ -1,10 +1,15 @@
+.weather-card {
+  display: flex;
+  width: 175px;
+}
 
-.card {
-  width: 20rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+.card-temp {
+  display: flex;
+  align-items: center;
+}
+
+.card-temp h2 {
+  font-size: 45px;
 }
 
 i:hover {

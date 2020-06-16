@@ -5,7 +5,7 @@ class Form extends React.Component {
   render() {
     return (
       <form className="form" onSubmit={this.props.weatherMethod}>
-        <input className="search-input" type="text" name="city" placeholder="Найти город или индекс"></input>
+        <input className="search-input" type="search" name="city" required placeholder="Найти город или индекс" autoComplete="off"></input>
         <button className="button">Поиск</button>
       </form>
     );

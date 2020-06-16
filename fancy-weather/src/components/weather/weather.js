@@ -1,24 +1,26 @@
 import React from 'react';
 import './weather.css';
-// import ReactSVG from 'react-svg'
-// // const reqSvgs = require.context ('../icons/animated', true, /\.svg$/ )
-
-// // const svgs = reqSvgs
-// //   .keys ()
-// //   .reduce ( ( images, path ) => {
-// //     images[path] = reqSvgs ( path )
-// //     return images
-// //   }, {} )
+import Clock from './clock';
 
 class Weather extends React.Component {
+
   render() {
-    const data = this.props.data;
+    const { temp, celsius, weather, feels_like, time_zone } = this.props;
     return (
-      <div className="weather-container">
-        <p className="city">{this.props.city}</p>
-        <div className="weather-today">
-          {data ? <p>{Math.round(this.props.temp)}</p> : ''}
-          {data ? <img src={"http://openweathermap.org/img/wn/" + this.props.data.weather[0].icon + "@2x.png"} alt="Forecast"></img> : '' }  
+      <div className="weather-wrapper">
+        <p className="city">{this.props.city}, {this.props.country}</p>
+        <Clock time_zone = {time_zone}/>
+        <div className="weather-container">
+          <div className="weather-today">
+            <p>{celsius ? temp : Math.round(temp * (9/5) + 32) }</p>
+          </div>
+          <div className="weather-data">
+            <img className="weather-img" src={"http://openweathermap.org/img/wn/" + this.props.icon + "@2x.png"} alt="Forecast"></img>
+            <p>{weather}</p>
+            <p>feels like: {feels_like}°</p>          
+            <p>wind: {this.props.wind} m/s</p>           
+            <p>humidity: {this.props.humidity}%</p>            
+          </div>
         </div>
       </div>
     );
