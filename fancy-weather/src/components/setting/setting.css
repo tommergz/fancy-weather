@@ -22,21 +22,21 @@
   position: absolute;
   list-style: none;
   text-align: center;
-  top: 15px;
+  top: 46px;
   font-size: 15px;
   left: 0;
   margin: 0;
   padding: 0;
   max-height: 0px;
   overflow: hidden;
-  -webkit-transition: max-height 0.4s linear;
-  -moz-transition: max-height 0.4s linear;
-  transition: max-height 0.4s linear;
+  -webkit-transition: max-height 0s linear;
+  -moz-transition: max-height 0s linear;
+  transition: max-height 0s linear;
 }
 
-#slow_nav li:hover ul{
+/* #slow_nav li:hover ul{
   max-height: 300px;
-}
+} */
 
 #slow_nav li ul li a{
   padding: 5px 12px;
@@ -71,16 +71,15 @@
   border-radius: .5rem;
 }
 
-.img-button:hover, .set-lang-button:hover, #fahrenheit-button:hover, #celsius-button:hover {
-  background: rgba(223, 228, 231, 0.7);
-}
-
 .img-button {
   font-size: 33px;
 }
 
+.img-button:hover {
+  background: rgba(223, 228, 231, 0.7);
+}
+
 #slow_nav li ul li:first-child{
-  margin-top: 31px;
   position: relative;
 }
 
@@ -93,4 +92,8 @@
 
 #celsius-button {
   border-radius: 0 .5rem .5rem 0;
+}
+
+#ru {
+  border-radius: 0 0 .5rem .5rem;
 }

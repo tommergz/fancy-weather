@@ -6,6 +6,8 @@ import Weather from '../weather';
 import Forecast from '../forecast';
 import Map from '../map';
 
+// import t from '../../locales/lang';
+
 const COORDS_API_KEY = "0c220e3ff07646af8d20f76ab941d055";
 const WEATHER_API_KEY = "a79efab23a4b7eced0f536f0d9007cf4";
 const IMG_API_KEY = "cctf-xDi91Q_NDu6y-UuGbw54ZFA4r56dNRTKygmu1Q";
@@ -27,12 +29,12 @@ class App extends React.Component {
     forecast: [],
     celsius: true,
     time_zone: undefined,
-    lang: 'en',
+    lang: "ru",
     error: undefined
   }
 
-  gettingRandomImage = async () => {
-    const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=nature&client_id=${IMG_API_KEY}`;
+  gettingRandomImage = async (time, season) => {
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=nature,${time}&client_id=${IMG_API_KEY}`;
     const res = await fetch(url);
     if (!res.ok) {
       console.log(`Looks like there was a problem. Status Code: ${res.status}`);
@@ -45,28 +47,35 @@ class App extends React.Component {
 
   componentDidMount() {  this.getContent('Tokyo')  }
 
-  getContent = async (city) => {
-    const lang = this.state.lang;
-    try {
-      const api_coords = await
+  getCoords = async (city, lang) => {
+    const api_coords = await
       fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${COORDS_API_KEY}&language=${lang}`);
       const coordinates = await api_coords.json();
       const town = coordinates.results[0].formatted.split(',')[0];
       const country = coordinates.results[0].components.country;
       const {lat, lng} = coordinates.results[0].geometry;
+      const time_zone = coordinates.results[0].annotations.timezone.name;
       console.log(coordinates.results[0]);
+      return {town, country, lat, lng, time_zone}
+  }
+
+  getContent = async (city) => {
+    const lang = this.state.lang;
+    try {
+      
+      const {town, country, lat, lng, time_zone} = await this.getCoords(city, lang);
 
       const api_url = await 
       fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`);
       const data = await api_url.json();
       console.log(data);
       const newIcon = data.weather[0].icon;
-      const weather = data.weather[0].description;
+      const weather = data.weather[0].id;
       const temp = Math.round(data.main.temp - 273);
       const feels_like = Math.round(data.main.feels_like - 273);
       const wind = data.wind.speed;
       const humidity = data.main.humidity;
-      const time_zone = coordinates.results[0].annotations.timezone.name;
+      
 
       const forecast_api_url = await 
       fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`)
@@ -75,8 +84,17 @@ class App extends React.Component {
       const dailyData = forecastData.list.filter(reading => reading.dt_txt.includes("18:00:00"));
 
       dailyData.splice(2,2);
+
+      const moment = require('moment-timezone');
+      const newTime = +(moment().tz(time_zone).format('HH').split(' ')) + 0.1;   
+
+      let timeOfDay = 
+        (12 > newTime && newTime > 6) ? 'morning' : 
+        (18 > newTime && newTime > 12) ? 'day' :  
+        (24 > newTime && newTime > 18) ? 'evening' : 
+        (6 > newTime && newTime > 0) ? 'night' : '';
       
-      this.gettingRandomImage()
+      this.gettingRandomImage(timeOfDay)
 
       this.setState({
         icon: newIcon,
@@ -97,6 +115,23 @@ class App extends React.Component {
     } catch(err) {
       console.log(err)
     }
+  }
+
+  switchLang = async (e) => {
+    e.preventDefault();
+    const setLang = document.getElementById('set-lang');
+    document.getElementById('ul').style.maxHeight = '0px';
+    setLang.style.borderRadius = '.5rem';
+    const newLang = e.target.id;
+    const settlement = document.getElementById('city').innerText.split(',')[0];
+    setLang.innerHTML = newLang === 'en' ? 'EN' : 'RU';
+    const {town, country} = await this.getCoords(settlement, newLang);
+    this.setState({
+      city: town,
+      country: country,
+      lang: newLang
+    })
+
   }
 
   gettingDegrees = (e) => {
@@ -135,8 +170,8 @@ class App extends React.Component {
     return (
       <div id="common-wrapper">
         <header className="header">
-          <Setting degreeMethod = {this.gettingDegrees}/>
-          <Form weatherMethod = {this.gettingWeather} />
+          <Setting langMethod = {this.switchLang} degreeMethod = {this.gettingDegrees}/>
+          <Form weatherMethod = {this.gettingWeather} lang = {this.state.lang}/>
         </header>
         <div className="main">
           <div className="weather">
@@ -151,11 +186,13 @@ class App extends React.Component {
               humidity = {this.state.humidity}
               celsius = {this.state.celsius}
               time_zone = {this.state.time_zone}
+              lang = {this.state.lang}
               error = {this.state.error}
             />
             <Forecast
               forecast = {this.state.forecast}
               celsius = {this.state.celsius}
+              lang = {this.state.lang}
             />
           </div>
           <div className="map">
@@ -164,6 +201,7 @@ class App extends React.Component {
               lng = {this.state.lng}
               lat = {this.state.lat} 
               zoom = {this.state.zoom}
+              lang = {this.state.lang}
             /> 
           </div>
         </div>
