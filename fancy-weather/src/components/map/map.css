@@ -1,7 +1,16 @@
-.mapContainer {
+.map-wrapper {
+  border: 1px solid white;
+  border-radius: 0.5rem;
+}
+
+.map-container {
   width: 375px;
   height: 375px;
   border-radius: .5rem;
+
+  filter: invert(1) hue-rotate(200deg);
+  border: 1px solid white;
+
 }
 
 .coords {
@@ -15,5 +24,6 @@
   margin-bottom: 0;
   font-weight: 600;
   font-size: 25px;
-  line-height: 25px;
+  line-height: 30px;
+  text-shadow: 0px 0px 24px rgba(0, 0, 0, 0.7);
 }

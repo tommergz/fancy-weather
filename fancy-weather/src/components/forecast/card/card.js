@@ -1,6 +1,8 @@
 import React from 'react';
 import './card.css';
 import t from '../../../locales/lang';
+import icons from '../../icons';
+
 let moment = require('moment');
 
 class Card extends React.Component {
@@ -21,7 +23,8 @@ class Card extends React.Component {
           <h3 className="card-title">{lang[moment(newDate).format('dddd')]}</h3>
           <div className="card-temp">
             <h2>{ celsius ? temp : Math.round(temp * (9/5) + 32) }°</h2>
-            <img src={"http://openweathermap.org/img/wn/" + this.props.day.weather[0].icon + "@2x.png"} alt="Forecast"></img>         
+            {/* <img src={"http://openweathermap.org/img/wn/" + this.props.day.weather[0].icon + "@2x.png"} alt="Forecast"></img>          */}
+            <img src={icons[this.props.icon]} alt="Forecast"></img>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import React  from 'react';
+import './clock.css'
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-Moment.globalFormat = 'hh:mm:ss';
+Moment.globalFormat = 'HH:mm:ss';
 
 class Clock extends React.Component {
 
@@ -20,7 +21,7 @@ class Clock extends React.Component {
     const lang = this.props.lang;
     
     return (
-      <div>
+      <div className="clock">
         <span>{timeZone ? `${lang[newDate[0]]} ${newDate[1]} ${lang[newDate[2]]} ` : ''}</span>
         <Moment tz={timeZone} interval={1000} />
       </div>

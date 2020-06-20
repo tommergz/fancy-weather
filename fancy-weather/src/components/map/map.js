@@ -19,13 +19,18 @@ class Map extends React.Component {
     });    
   }
 
-  langMap = (map, lang) => {
+  rendering = {
+    render: false
+  };
+
+  langMap = (map, lang, draw) => {
     this.map.on('load', function() {    
       map.getStyle().layers.forEach(function(thisLayer){
-            if(thisLayer.id.indexOf('-label')>0){
-              map.setLayoutProperty(thisLayer.id, 'text-field', ['get','name_' + lang])
-            }
-        });
+        if(thisLayer.id.indexOf('-label')>0){
+          map.setLayoutProperty(thisLayer.id, 'text-field', ['get','name_' + lang])
+        }
+      });
+      draw.render = true;
     });
   }
   
@@ -51,7 +56,7 @@ class Map extends React.Component {
   componentDidUpdate() {  
     this.newMap(); 
     this.addMarker() 
-    this.langMap(this.map, this.props.lang)
+    this.langMap(this.map, this.props.lang, this.rendering)
   }
     
   render() {
@@ -61,12 +66,12 @@ class Map extends React.Component {
 
     return (
       <div>
-        <div>
-          <div ref={el => this.mapContainer = el} className='mapContainer' />
+        <div className="map-wrapper">
+            <div ref={el => this.mapContainer = el} className='map-container' />
         </div>
         <div className="coords">
-          <p>{lang['latitude']}: {lat}</p>
-          <p>{lang['longitude']}: {lng}</p>
+          { lat !== "-NaN° NaN'" ? <p>{lang['latitude']}: {lat}</p> : '' }
+          { lng !== "-NaN° NaN'" ? <p>{lang['longitude']}: {lng}</p> : '' }
         </div>
       </div>  
     )

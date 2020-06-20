@@ -1,6 +1,7 @@
 body {
   height: 100vh;
   background-size: cover;
+  background-color: black;
   margin: 0;
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,6 +9,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  transition: background 5s ease;
+  
 }
 
 code {
@@ -17,3 +21,10 @@ code {
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
+/* @keyframes shine {
+  0% {
+    background-position: -100vw;    
+  }
+  100% {
+    background-position: 100vw;   
+  } */

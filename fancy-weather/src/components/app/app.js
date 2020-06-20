@@ -30,10 +30,11 @@ class App extends React.Component {
     celsius: true,
     time_zone: undefined,
     lang: "ru",
+    load: false,
     error: undefined
   }
 
-  gettingRandomImage = async (time, season) => {
+  gettingRandomImage = async (time) => {
     const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=nature,${time}&client_id=${IMG_API_KEY}`;
     const res = await fetch(url);
     if (!res.ok) {
@@ -41,13 +42,30 @@ class App extends React.Component {
     } else {
       const data = await res.json();
       const imageUrl = await data.urls.full;
-      document.body.style.backgroundImage = `url(${imageUrl})`;    
+      let img = new Image();
+      let wrapper = document.getElementById('common-wrapper');
+      if (!this.state.load) { wrapper.classList.add('loading') };
+
+      img.onload = () => {
+        document.body.style.backgroundImage = `url(${imageUrl})`;
+        if (!this.state.load) { 
+          wrapper.classList.remove('loading');  
+          this.setState({
+            load: true
+          })
+        }
+      }
+      img.src = imageUrl; 
+      if (img.complete) {
+        img.onload();
+      }
     }
   }
 
   componentDidMount() {  this.getContent('Tokyo')  }
 
   getCoords = async (city, lang) => {
+
     const api_coords = await
       fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${COORDS_API_KEY}&language=${lang}`);
       const coordinates = await api_coords.json();
@@ -65,6 +83,17 @@ class App extends React.Component {
       
       const {town, country, lat, lng, time_zone} = await this.getCoords(city, lang);
 
+      const moment = require('moment-timezone');
+      const newTime = +(moment().tz(time_zone).format('HH').split(' ')) + 0.1;   
+
+      let timeOfDay = 
+        (12 > newTime && newTime > 6) ? 'morning' : 
+        (18 > newTime && newTime > 12) ? 'day' :  
+        (24 > newTime && newTime > 18) ? 'evening' : 
+        (6 > newTime && newTime > 0) ? 'night' : '';
+      
+      await this.gettingRandomImage(timeOfDay);
+
       const api_url = await 
       fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`);
       const data = await api_url.json();
@@ -81,20 +110,9 @@ class App extends React.Component {
       fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`)
       const forecastData = await forecast_api_url.json();
 
-      const dailyData = forecastData.list.filter(reading => reading.dt_txt.includes("18:00:00"));
+      let dailyData = forecastData.list.filter(reading => reading.dt_txt.includes("18:00:00"));
 
-      dailyData.splice(2,2);
-
-      const moment = require('moment-timezone');
-      const newTime = +(moment().tz(time_zone).format('HH').split(' ')) + 0.1;   
-
-      let timeOfDay = 
-        (12 > newTime && newTime > 6) ? 'morning' : 
-        (18 > newTime && newTime > 12) ? 'day' :  
-        (24 > newTime && newTime > 18) ? 'evening' : 
-        (6 > newTime && newTime > 0) ? 'night' : '';
-      
-      this.gettingRandomImage(timeOfDay)
+      dailyData = dailyData.splice(1,3);
 
       this.setState({
         icon: newIcon,
@@ -117,6 +135,38 @@ class App extends React.Component {
     }
   }
 
+  changeImage = async (e) => {
+    e.preventDefault();
+
+    let btn = e.target;
+    btn.classList.add('image-button-anime');
+    console.log(btn.classList);
+    setTimeout(
+      function() {
+        this.classList.remove('image-button-anime')
+      }
+      .bind(btn),
+      2000
+    );
+
+    const cityText = document.getElementById('city');
+    const city = cityText.innerText.split(',')[0];
+
+    const {time_zone} = await this.getCoords(city);
+
+    const moment = require('moment-timezone');
+    const newTime = +(moment().tz(time_zone).format('HH').split(' ')) + 0.1;   
+    
+    let timeOfDay = 
+      (12 > newTime && newTime > 6) ? 'morning' : 
+      (18 > newTime && newTime > 12) ? 'day' :  
+      (24 > newTime && newTime > 18) ? 'evening' : 
+      (6 > newTime && newTime > 0) ? 'night' : '';
+    
+    await this.gettingRandomImage(timeOfDay);
+
+  }
+
   switchLang = async (e) => {
     e.preventDefault();
     const setLang = document.getElementById('set-lang');
@@ -131,7 +181,6 @@ class App extends React.Component {
       country: country,
       lang: newLang
     })
-
   }
 
   gettingDegrees = (e) => {
@@ -142,16 +191,16 @@ class App extends React.Component {
     const celsiusButton = document.getElementById('celsius-button');
     
     if (degreeType === 'fahrenheit') {
-      fahrenheitButton.style.background = 'rgba(180,184,187,.7)';
-      celsiusButton.style.background = 'rgba(76,82,85,.7)';
+      fahrenheitButton.style.background = 'rgba(76,82,85,.7)';
+      celsiusButton.style.background = 'black';
       fahrenheitButton.disabled = true;
       celsiusButton.disabled = false;
       this.setState({
         celsius: false
       })
     } else {
-      celsiusButton.style.background = 'rgba(180,184,187,.7)';
-      fahrenheitButton.style.background = 'rgba(76,82,85,.7)';
+      celsiusButton.style.background = 'rgba(76,82,85,.7)';
+      fahrenheitButton.style.background = 'black';
       celsiusButton.disabled = true;
       fahrenheitButton.disabled = false;
       this.setState({
@@ -170,7 +219,7 @@ class App extends React.Component {
     return (
       <div id="common-wrapper">
         <header className="header">
-          <Setting langMethod = {this.switchLang} degreeMethod = {this.gettingDegrees}/>
+          <Setting imgMethod = {this.changeImage} langMethod = {this.switchLang} degreeMethod = {this.gettingDegrees}/>
           <Form weatherMethod = {this.gettingWeather} lang = {this.state.lang}/>
         </header>
         <div className="main">
@@ -190,6 +239,7 @@ class App extends React.Component {
               error = {this.state.error}
             />
             <Forecast
+              icon = {this.state.icon}
               forecast = {this.state.forecast}
               celsius = {this.state.celsius}
               lang = {this.state.lang}

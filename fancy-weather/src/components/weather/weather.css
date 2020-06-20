@@ -5,27 +5,31 @@
 
 .weather-container {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .weather-today {
   display: flex;
+  align-items: flex-end;
 }
 .weather-today p {
   width: 305px;
-  font-size: 276px;
+  font-size: 304px;
   font-weight: 600;
-  margin-right: 25px;
+  margin-right: 68px;
   margin-bottom: 0;
-  line-height: 295px;
+  line-height: 264px;
 }
 
 .weather-img {
   height: 150px;
+  margin-left: -45px;
 }
 
 .city {
   font-size: 50px;
   font-weight: 700;
+  line-height: 55px;
   margin: 0;
 }
 

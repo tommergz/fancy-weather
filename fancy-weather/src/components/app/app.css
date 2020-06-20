@@ -1,7 +1,29 @@
 #common-wrapper {
   height: 100vh;
-  background-color: rgba(29, 28, 28, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 50px 100px 0 100px;
+  overflow: auto;
+}
+
+.loading {
+  background-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255,255,255,0.3) 80%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-position: -100vw;
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -100vw;    
+  }
+  100% {
+    background-position: 100vw;   
+  }
 }
 
 .header {
@@ -13,6 +35,12 @@
 .main {
   display: flex;
   justify-content: space-between;
+  margin-top: 75px;
+}
+
+.weather {
+  width: 670px;
+  text-shadow: 0px 0px 24px rgba(0, 0, 0, 0.7);
 }
 
 .weather, .map {
@@ -23,4 +51,106 @@
 
 .map {
   align-items: flex-end;
+}
+
+@media (max-width: 1100px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #city {
+    text-align: center;
+  }
+
+  .weather {
+    width: auto;
+    margin-bottom: 50px;
+  }
+
+  .weather-wrapper {
+    align-items: center;
+  }
+
+  .forecast-container {
+    justify-content: center;
+  }
+
+  .weather-card {
+    justify-content: center;
+  }
+
+  .coords {
+    align-items: center !important;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 850px) {
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    height: 135px;
+  }
+  
+  .form {
+    order: 1;
+  }
+
+  .button-cluster {
+    order: 2;
+  }
+
+  .weather-today p {
+    width: 100% !important;
+    text-align: center;
+  }
+}
+
+@media (max-width: 850px) {
+  .weather-container {
+    flex-direction: column;
+  }
+
+  .weather-today p {
+    margin: 0 !important;
+  }
+
+  .weather-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .weather-img {
+    width: 400px;
+    height: auto !important;
+    margin-bottom: -50px;
+  }
+
+  .forecast-container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  .card-temp {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .search-input {
+    width: 200px !important;
+  }
+
+  .weather-today p {
+    font-size: 250px !important;
+  }
+
+  .map-container {
+    width: 280px !important;
+    height: 280px !important;
+  }  
 }
