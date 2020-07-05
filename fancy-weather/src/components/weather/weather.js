@@ -2,19 +2,23 @@ import React from 'react';
 import './weather.css';
 import Clock from './clock';
 import t from '../../locales/lang';
-import icons from '../icons';
+import icons from '../../assets/obj-icons';
 
 class Weather extends React.Component {
+  
+  componentDidMount() {
+    document.getElementById('content-wrapper').style.animation = "moveRightLeft 3s alternate";
+  }
 
   render() {
 
-    const { temp, celsius, weather, feels_like, wind, humidity, icon, time_zone } = this.props;
+    const { city, country, temp, celsius, weather, feels_like, wind, humidity, icon, time_zone } = this.props;
     const lang = t[this.props.lang];
     return (
       <div>
-        { icon ? 
+        {this.props.icon ?
           <div className="weather-wrapper">
-            <p id="city" className="city">{this.props.city}, {this.props.country}</p>
+            <p id="city" className="city">{city}, {country}</p>
             <Clock time_zone = {time_zone} lang = {lang}/>
             <div className="weather-container">
               <div className="weather-today">
@@ -32,7 +36,7 @@ class Weather extends React.Component {
           </div> : ''
         }
       </div>
-    );
+    ); 
   }
 };
 

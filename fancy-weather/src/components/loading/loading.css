@@ -1,0 +1,24 @@
+/* 
+.loading {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  background: black;
+}
+
+.loading {
+  height: 500px;
+  width: 500px;
+  background-color: tomato;
+} */
+
+.loading {
+  height: 100vh;
+  width: 100%;
+  /* display: flex;
+  align-self: center;
+  justify-content: center; */
+  /* background-color: rgba(0, 0, 0, 0.6); */
+}

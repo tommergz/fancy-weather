@@ -98,7 +98,9 @@ const t = {
         "802": "scattered clouds",
         "803": "broken clouds",
         "804": "overcast clouds"
-      }
+      },
+      error: "Unknown server API error. Try again later.",
+      ghostCity: "No such city found"     
     },
 
   ru: 
@@ -199,8 +201,12 @@ const t = {
         "802": "переменная облачность",
         "803": "переменная облачность",
         "804": "пасмурно"
-      }
+      },
+      error: `Возникли некоторые ошибки со стороны API сервера. 
+      Попробуйте загрузить приложение позже.`,
+      ghostCity: "Не удалось найти такой город"     
     }
+    
 }
 
 export default t;

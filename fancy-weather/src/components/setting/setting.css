@@ -48,6 +48,10 @@
   background-color: rgba(223, 228, 231, 0.7);
 }
 
+#slow_nav li ul:last-child:hover {
+  border-radius: 0 0 .5rem .5rem;
+}
+
 #slow_nav li ul li:first-child{
   position: relative;
 }

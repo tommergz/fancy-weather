@@ -1,10 +1,14 @@
 import React from 'react';
 import './setting.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRecycle } from '@fortawesome/free-solid-svg-icons';
+
 
 class Setting extends React.Component {
 
   componentDidMount = () => {
-    document.getElementById('celsius-button').disabled = true;
+    const celsiusBtn = document.getElementById('celsius-button');
+    if (celsiusBtn) celsiusBtn.style.cursor = 'auto';
   }
 
   buttonHover = (e) => {
@@ -31,25 +35,32 @@ class Setting extends React.Component {
   }
 
   render() {
-    const { imgMethod, langMethod, degreeMethod } = this.props;
+    const { imgMethod, langMethod, degreeMethod, cDisabled, fDisabled, loading } = this.props;
+    
     return (
-      <div className="button-cluster">
-        <button className="img-button" onClick={imgMethod}>&#8617;</button>
-        <nav id="slow_nav">
-          <ul>
-            <li>
-              <button id="set-lang" className="set-lang-button" onMouseOver={this.buttonHover} onMouseLeave={this.langButtonLeave} onClick={this.langButtonClick}>RU</button>
-              <ul id="ul">
-                <li><button id="en" className="lang-button" onClick={langMethod}>EN</button></li>
-                {/* <li><button id="be" className="lang-button" onClick={langMethod}>BE</button></li> */}
-                <li><button id="ru" className="lang-button" onClick={langMethod}>RU</button></li>
+      <div className="setting">
+        {this.props.icon ?
+          <div className="button-cluster">
+            <button className="img-button bttn" onClick={imgMethod}>
+              {loading ? <FontAwesomeIcon id="img-button" icon={faRecycle} className="image-button-anime" /> : <FontAwesomeIcon id="img-button" icon={faRecycle} />  }
+            </button>
+            <nav id="slow_nav">
+              <ul>
+                <li>
+                  <button id="set-lang" className="set-lang-button bttn" onMouseOver={this.buttonHover} onMouseLeave={this.langButtonLeave} onClick={this.langButtonClick}>EN</button>
+                  <ul id="ul">
+                    <li><button id="en" className="lang-button" onClick={langMethod}>EN</button></li>
+                    {/* <li><button id="be" className="lang-button" onClick={langMethod}>BE</button></li> */}
+                    <li><button id="ru" className="lang-button" onClick={langMethod}>RU</button></li>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
-        </nav>
-        <button id="fahrenheit-button" onClick={degreeMethod} onMouseOver={this.buttonHover} onMouseLeave={this.buttonLeave}>°F</button>
-        <button id="celsius-button" onClick={degreeMethod} onMouseOver={this.buttonHover} onMouseLeave={this.buttonLeave}>°C</button>
-      </div>
+            </nav>
+            <button id="fahrenheit-button" className="bttn" onClick={degreeMethod} onMouseOver={this.buttonHover} onMouseLeave={this.buttonLeave} disabled = {fDisabled}>°F</button>
+            <button id="celsius-button" className="bttn" onClick={degreeMethod} onMouseOver={this.buttonHover} onMouseLeave={this.buttonLeave} disabled = {cDisabled}>°C</button>
+          </div> : ''
+        }
+      </div>   
     );
   }
 };

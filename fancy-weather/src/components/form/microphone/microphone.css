@@ -1,0 +1,61 @@
+#microphone-btn {
+  height: 100%;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  position: absolute;
+  right: 80px;
+}
+
+#mic {
+  font-size: 26px;
+  color: rgba(223, 228, 231, 0.7);;
+}
+
+#mic:hover {
+  color: white;
+}
+
+.mic-animation {
+  color: white !important;
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse {
+  0% {
+      transform: scaleX(1) scaleY(1);
+  }
+  10% {
+      transform: scaleX(0.85) scaleY(0.85);
+  }
+  20% {
+      transform: scaleX(1) scaleY(1);
+  }
+  30% {
+      transform: scaleX(0.85) scaleY(0.85);
+  }
+  40% {
+      transform: scaleX(1) scaleY(1);
+  }
+  50% {
+      transform: scaleX(0.85) scaleY(0.85);
+  }
+  60% {
+      transform: scaleX(1) scaleY(1);
+  }
+  70% {
+      transform: scaleX(0.85) scaleY(0.85);
+  }
+  80% {
+      transform: scaleX(1) scaleY(1);
+  }
+  90% {
+      transform: scaleX(0.85) scaleY(0.85);
+  }
+  100% {
+      transform: scaleX(1) scaleY(1);
+  }
+}

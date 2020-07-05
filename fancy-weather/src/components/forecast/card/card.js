@@ -1,7 +1,7 @@
 import React from 'react';
 import './card.css';
 import t from '../../../locales/lang';
-import icons from '../../icons';
+import icons from '../../../assets/obj-icons';
 
 let moment = require('moment');
 

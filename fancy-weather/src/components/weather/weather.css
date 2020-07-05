@@ -1,6 +1,8 @@
 .weather-wrapper {
   display: flex;
   flex-direction: column;
+  margin-top: -25px;
+  margin-bottom: 30px;
 }
 
 .weather-container {
@@ -16,6 +18,7 @@
   width: 305px;
   font-size: 304px;
   font-weight: 600;
+  margin-top: -30px;
   margin-right: 68px;
   margin-bottom: 0;
   line-height: 264px;
@@ -31,6 +34,10 @@
   font-weight: 700;
   line-height: 55px;
   margin: 0;
+}
+
+.weather-data {
+  margin-right: 20px;
 }
 
 .weather-data p {

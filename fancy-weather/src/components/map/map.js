@@ -1,10 +1,11 @@
 import React from 'react';
 import './map.css';
-
+import apiKeys from '../../services/apiKeys'
 import mapboxgl from 'mapbox-gl';
+
 import t from '../../locales/lang';
  
-mapboxgl.accessToken = 'pk.eyJ1IjoiY29yYmVuZGFsbGFzIiwiYSI6ImNrYXRsY2lyYTBtaGUyeWwycmVvY3NqOTUifQ.RMnyV0u_LjUodKwFaBHsYw';
+mapboxgl.accessToken = apiKeys.map;
 
 class Map extends React.Component {
   
@@ -19,18 +20,13 @@ class Map extends React.Component {
     });    
   }
 
-  rendering = {
-    render: false
-  };
-
-  langMap = (map, lang, draw) => {
+  langMap = (map, lang) => {
     this.map.on('load', function() {    
       map.getStyle().layers.forEach(function(thisLayer){
         if(thisLayer.id.indexOf('-label')>0){
           map.setLayoutProperty(thisLayer.id, 'text-field', ['get','name_' + lang])
         }
       });
-      draw.render = true;
     });
   }
   
@@ -53,30 +49,105 @@ class Map extends React.Component {
     return this.props.lng !== nextProps.lng || this.props.lang !== nextProps.lang
   }
 
+  createMap() {
+    if (this.props.lat) {
+      this.newMap(); 
+      this.addMarker(); 
+      this.langMap(this.map, this.props.lang);
+    }
+  }
+
+  componentDidMount() {
+    this.createMap()
+  }
+
   componentDidUpdate() {  
-    this.newMap(); 
-    this.addMarker() 
-    this.langMap(this.map, this.props.lang, this.rendering)
+    this.createMap()
   }
     
   render() {
     const lat = this.coordsConversion(this.props.lat);
     const lng = this.coordsConversion(this.props.lng);
     const lang = t[this.props.lang];
+    // const render = this.state.render;
 
     return (
       <div>
-        <div className="map-wrapper">
-            <div ref={el => this.mapContainer = el} className='map-container' />
-        </div>
-        <div className="coords">
-          { lat !== "-NaN° NaN'" ? <p>{lang['latitude']}: {lat}</p> : '' }
-          { lng !== "-NaN° NaN'" ? <p>{lang['longitude']}: {lng}</p> : '' }
-        </div>
+        { lat !== "-NaN° NaN'" ?
+          <div >          
+            <div id="map-wrapper" className="map-wrapper">
+              <div ref={el => this.mapContainer = el} className='map-container' />
+            </div>
+            <div className="coords">
+              <p>{lang['latitude']}: {lat}</p>
+              <p>{lang['longitude']}: {lng}</p>
+            </div>
+          </div> : null
+        }        
       </div>  
     )
   }
-
 }
 
 export default Map;
+
+// import React from 'react';
+// import './map.css';
+// import apiKeys from '../../services/apiKeys';
+
+// import t from '../../locales/lang';
+
+// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+ 
+// export class MapContainer extends React.Component {
+
+//   coordsConversion = (coord) => {
+//     const sign = coord >= 0 ? '' : '-';
+//     const abs = Math.abs(coord)
+//     const degrees = Math.floor(abs);
+//     const minutes = (abs - degrees) * 60;
+//     const curtailedMinutes = Math.floor(minutes);
+//     return `${sign}${degrees}° ${curtailedMinutes}'`;
+//   }
+
+//   shouldComponentUpdate(nextProps) {
+//     return this.props.lng !== nextProps.lng || this.props.lang !== nextProps.lang
+//   }
+
+//   render() {
+//     const lat = this.props.lat;
+//     const lng = this.props.lng;
+//     const lang = t[this.props.lang];
+//     return (
+//       <div>
+//         <div className="map-wrapper">
+//           <Map 
+//             google={this.props.google} zoom={14} className="map-container"
+//             initialCenter={{
+//               lat: lat,
+//               lng: lng
+//             }}
+//           >
+//               {/* <Marker onClick={this.onMarkerClick}
+//                 name={'Current location'} /> */}
+
+//           </Map>
+//         </div>
+//         <div className="coords">
+//           <p>{lang['latitude']}: {lat}</p>
+//           <p>{lang['longitude']}: {lng}</p>
+//         </div>
+//       </div>
+  
+ 
+      
+//     );
+//   }
+// }
+ 
+// export default GoogleApiWrapper({
+//   apiKey: apiKeys.googleMap,
+//   language: "russian"
+  
+// })(MapContainer)
+
