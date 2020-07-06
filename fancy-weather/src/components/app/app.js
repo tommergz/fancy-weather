@@ -36,7 +36,7 @@ class App extends React.Component {
 
   apiService = new apiService();
 
-  gettingRandomImage = async (time) => {
+  getRandomImage = async (time) => {
     try {
       const imageUrl = await this.apiService.getImage(time);
       if (imageUrl) {
@@ -103,7 +103,7 @@ class App extends React.Component {
         (24 > newTime && newTime > 18) ? 'evening' : 
         (6 > newTime && newTime > 0) ? 'night' : '';
       
-      await this.gettingRandomImage(timeOfDay);
+      await this.getRandomImage(timeOfDay);
 
       const {newIcon, weather, temp, feels_like, wind, humidity, dailyData} = await this.apiService.getWeather(lat, lng);
 
@@ -168,7 +168,7 @@ class App extends React.Component {
       (24 > newTime && newTime > 18) ? 'evening' : 
       (6 > newTime && newTime > 0) ? 'night' : '';
     
-    await this.gettingRandomImage(timeOfDay);
+    await this.getRandomImage(timeOfDay);
   }
 
   switchLang = async (e) => {
@@ -187,7 +187,7 @@ class App extends React.Component {
     })
   }
 
-  gettingDegrees = (e) => {
+  getDegrees = (e) => {
     const degreeType = e.target.id.slice(0,-7);
     const fahrenheitButton = document.getElementById('fahrenheit-button');
     const celsiusButton = document.getElementById('celsius-button');
@@ -215,25 +215,22 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() { this.getContent('Tokyo') }
+  componentDidMount() { this.getContent('Minsk') }
 
   render() {
     const state = this.state;
     const load = this.state.load;
-    // const loading = this.state.loading;
     const error = this.state.error;
-    const gettingContent = load && !error;
-
-    // if (error) document.getElementById('common-wrapper').display = 'block';
+    const createContent = load && !error;
 
     const errorBlock = error ? <Error lang={this.state.lang} /> : null;
     const spinner = !load ? <Loading /> : null;
-    const content = gettingContent ?  
+    const content = createContent ?  
     <Main
       state = {state}
       imgMethod = {this.changeImage} 
       langMethod = {this.switchLang} 
-      degreeMethod = {this.gettingDegrees} 
+      degreeMethod = {this.getDegrees} 
       weatherMethod = {this.gettingWeather} 
       voiceSearch = {this.voiceSearch}
 
