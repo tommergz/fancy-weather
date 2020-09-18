@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.css';
 import t from '../../locales/lang';
-import Speech from './microphone';
+// import Speech from './microphone';
 
 class Form extends React.Component {
   render() {
@@ -12,7 +12,7 @@ class Form extends React.Component {
           <form className="form" onSubmit={this.props.weatherMethod}>
             <input className="search-input" type="search" name="city" required placeholder={lang.search} autoComplete="off"></input>
             <button className="button bttn">{lang.find}</button>
-            <Speech voiceSearch = {this.props.voiceSearch} lang = {this.props.lang} />
+            {/* <Speech voiceSearch = {this.props.voiceSearch} lang = {this.props.lang} /> */}
           </form>
         }
         
