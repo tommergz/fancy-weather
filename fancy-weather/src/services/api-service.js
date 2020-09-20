@@ -74,12 +74,12 @@ export default class apiService {
 
   btnStyles = () => {
     const buttons = document.getElementsByClassName('bttn');
-    const mic = document.getElementById('mic');
+    // const mic = document.getElementById('mic');
     
     Array.from(buttons).forEach(btn => {
       btn.disabled = false;
       btn.style.color = 'white';
-      mic.style.color = 'rgba(223, 228, 231, 0.7)';
+      // mic.style.color = 'rgba(223, 228, 231, 0.7)';
     })   
     const degreeBtn = document.getElementById('celsius-button');
     if (degreeBtn) {
