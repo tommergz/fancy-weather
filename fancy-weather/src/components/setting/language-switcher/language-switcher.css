@@ -1,0 +1,15 @@
+.set-lang-button:hover {
+  background: rgba(223, 228, 231, 0.7)
+}
+
+.set-lang-button:not(:hover) {
+  background: black
+}
+
+.language-setting-btn {
+  border-radius: .5rem .5rem 0 0
+}
+
+.language-menu {
+  max-height: 300px !important;
+}

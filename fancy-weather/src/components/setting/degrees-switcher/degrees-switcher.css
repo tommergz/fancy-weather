@@ -1,0 +1,36 @@
+.degree-btn-wrapper {
+  display: flex;
+}
+
+#fahrenheit-button, #celsius-button { border: 1px solid white; }
+
+#fahrenheit-button {
+  border-radius: .5rem 0 0 .5rem;
+}
+
+#celsius-button {
+  border-radius: 0 .5rem .5rem 0;
+  border-left: none;
+}
+
+.set-degrees-button:hover {
+  color: white !important;
+}
+
+.degrees-btn-hover-styles:hover {
+  background: rgba(223, 228, 231, 0.7) !important;
+}
+
+.degrees-btn-hover-styles:not(:hover) {
+  background: black
+}
+
+.active-degrees-btn {
+  background: rgba(76,82,85,.7);
+  cursor: auto !important
+}
+
+.inactive-degrees-btn {
+  background: black'rgba(76,82,85,.7)';
+  cursor: pointer !important
+}

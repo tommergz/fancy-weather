@@ -19,10 +19,6 @@
   color: transparent;
 }
 
-* {
-  outline: 0 !important;
-}
-
 .form {
   display: flex;
   height: 46px;
@@ -58,15 +54,12 @@ input:focus {outline: 0;}
   align-items: center;
   border-radius: .5rem;
   /* background: rgba(180,184,187,.7); */
-
   background: black;
-
   font-size: 18px;
   font-weight: 600;
   color: #fff;
   text-transform: uppercase;
   border: 0;
-
   border-left: 1px solid white;
 }
 

@@ -56,7 +56,10 @@
   position: relative;
 }
 
-.img-button, .lang-button, .set-lang-button, #fahrenheit-button, #celsius-button {
+.btn {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
   width: 50px;
   height: 46px;
   display: flex;
@@ -68,6 +71,12 @@
   color: #fff;
   text-transform: uppercase;
   border: 0;
+  border-radius: 0;
+}
+
+.freezed {
+  color: rgb(63, 187, 218) !important;
+  pointer-events: none;
 }
 
 .img-button, .set-lang-button {
@@ -99,19 +108,6 @@
 
 #slow_nav li ul li:first-child{
   position: relative;
-}
-
-#fahrenheit-button, #celsius-button { background: black; border: 1px solid white; }
-
-#fahrenheit-button {
-  border-radius: .5rem 0 0 .5rem;
-}
-
-#celsius-button {
-  border-radius: 0 .5rem .5rem 0;
-  border-left: none;
-
-  background: rgba(76,82,85,.7);
 }
 
 #ru {

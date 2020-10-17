@@ -5,10 +5,6 @@ import t from '../../locales/lang';
 import icons from '../../assets/obj-icons';
 
 class Weather extends React.Component {
-  
-  componentDidMount() {
-    document.getElementById('content-wrapper').style.animation = "moveRightLeft 3s alternate";
-  }
 
   render() {
 

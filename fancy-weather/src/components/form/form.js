@@ -3,23 +3,22 @@ import './form.css';
 import t from '../../locales/lang';
 // import Speech from './microphone';
 
-class Form extends React.Component {
-  render() {
-    const lang = t[this.props.lang];
-    return (
-      <div>
-        {this.props.icon &&
-          <form className="form" onSubmit={this.props.weatherMethod}>
-            <input className="search-input" type="search" name="city" required placeholder={lang.search} autoComplete="off"></input>
-            <button className="button bttn">{lang.find}</button>
-            {/* <Speech voiceSearch = {this.props.voiceSearch} lang = {this.props.lang} /> */}
-          </form>
-        }
-        
-      </div>
+const Form = ({lang, icon, weatherMethod, buttonsDisabled}) => {
 
-    );
-  }
+  const language = t[lang];
+  const freezedButtonStyle = buttonsDisabled ? ' freezed' : '';
+  return (
+    <div>
+      {icon &&
+        <form className="form" onSubmit={weatherMethod}>
+          <input className="search-input" type="search" name="city" required placeholder={language.search} autoComplete="off"></input>
+          <button className={"button btn" + freezedButtonStyle} disabled={buttonsDisabled}>{language.find}</button>
+          {/* <Speech voiceSearch = {this.props.voiceSearch} language = {this.props.language} /> */}
+        </form>
+      }        
+    </div>
+  );
+
 };
 
 export default Form;

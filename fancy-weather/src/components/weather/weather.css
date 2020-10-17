@@ -1,12 +1,12 @@
 .weather-wrapper {
-  display: flex;
+
   flex-direction: column;
   margin-top: -25px;
-  margin-bottom: 30px;
 }
 
 .weather-container {
   display: flex;
+  justify-content: flex-start;
   margin-bottom: 20px;
 }
 
@@ -15,11 +15,10 @@
   align-items: flex-end;
 }
 .weather-today p {
-  width: 305px;
-  font-size: 304px;
+  font-size: 235px;
   font-weight: 600;
   margin-top: -30px;
-  margin-right: 68px;
+  margin-right: 35px;
   margin-bottom: 0;
   line-height: 264px;
 }
@@ -27,6 +26,8 @@
 .weather-img {
   height: 150px;
   margin-left: -45px;
+  margin-top: -50px;
+  margin-bottom: -15px;
 }
 
 .city {
@@ -41,8 +42,8 @@
 }
 
 .weather-data p {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 600;
   text-transform: uppercase;
-  margin: 0;
+  margin: 2px;
 }

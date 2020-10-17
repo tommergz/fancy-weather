@@ -1,5 +1,4 @@
 import apiKeys from './apiKeys'
-import t from '../locales/lang';
 
 const COORDS_API_KEY = apiKeys.coords;
 const WEATHER_API_KEY = apiKeys.weather;
@@ -12,8 +11,7 @@ export default class apiService {
   async getResource(url) {
     const res = await fetch(url);
 
-    if (!res.ok) {
-     
+    if (!res.ok) {    
       throw new Error(`Could not fetch ${url}` +
         `, received ${res.status}`)
     }
@@ -24,23 +22,14 @@ export default class apiService {
     const coordinates = await this.getResource(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${COORDS_API_KEY}&language=${lang}`);     
     
     if (!coordinates.results[0]) {
-      const undefindCity = document.getElementById('error');
-      undefindCity.innerHTML = t[lang].ghostCity;
-      undefindCity.style.visibility = 'inherit';
-      setTimeout(() => undefindCity.style.visibility = 'hidden', 2000);
+      return {}
     }
 
     const town = coordinates.results[0].formatted.split(',')[0];
     const country = coordinates.results[0].components.country;
     const {lat, lng} = coordinates.results[0].geometry;
     const time_zone = coordinates.results[0].annotations.timezone.name;
-    if (this.load) {
-      const buttons = document.getElementsByClassName('bttn');
-      Array.from(buttons).forEach(function(btn){
-        btn.disabled = true;
-        btn.style.color = 'rgb(63, 187, 218)';
-      })
-    }
+
     return {town, country, lat, lng, time_zone}
   }
 
@@ -61,9 +50,7 @@ export default class apiService {
 
     if (!this.load) {
       this.load = true;
-    } else {
-      this.btnStyles()
-    }
+    } 
     return {newIcon, weather, temp, feels_like, wind, humidity, dailyData}
   }
 
@@ -72,22 +59,4 @@ export default class apiService {
     return data?.urls?.full;
   } 
 
-  btnStyles = () => {
-    const buttons = document.getElementsByClassName('bttn');
-    // const mic = document.getElementById('mic');
-    
-    Array.from(buttons).forEach(btn => {
-      btn.disabled = false;
-      btn.style.color = 'white';
-      // mic.style.color = 'rgba(223, 228, 231, 0.7)';
-    })   
-    const degreeBtn = document.getElementById('celsius-button');
-    if (degreeBtn) {
-      if (degreeBtn.style.cursor === 'auto' || degreeBtn.style.cursor === '') {
-        degreeBtn.disabled = true;
-      } else {
-        document.getElementById('fahrenheit-button').disabled = true;
-      }
-    }
-  }
 }

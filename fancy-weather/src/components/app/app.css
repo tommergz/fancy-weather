@@ -2,19 +2,21 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.common-wrapper {
-  width: 100%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+#content-wrapper {
+  /* height: 100vh; */
+  /* background-color: rgba(0, 0, 0, 0.6); */
+  padding: 0px 100px 0 100px;
+  overflow: auto;
+  animation: moveRightLeft 3s alternate;
 }
 
-#content-wrapper {
+.blackout {
+  width: 100%;
   height: 100vh;
-  /* background-color: rgba(0, 0, 0, 0.6); */
-  padding: 50px 100px 0 100px;
-  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 @keyframes moveRightLeft { 
@@ -51,6 +53,7 @@
 .header {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
   margin-bottom: 50px;
   position: relative;
 }
@@ -58,7 +61,7 @@
 .main {
   display: flex;
   justify-content: space-between;
-  margin-top: 75px;
+  margin-top: 60px;
 }
 
 .weather {
@@ -80,20 +83,29 @@ button:hover {
   cursor: pointer;
 }
 
-
-#error {
-  position: absolute;
-  right: 0;
-  top: 94%;
-  font-size: 40px;
-  color: red;
-  border-radius: .5rem;
-  visibility: hidden;
-  text-align: center;
-  z-index: 1;
-}
-
 @media (max-width: 1100px) {
+  .common-wrapper {
+    display: block;
+  }  
+
+  #content-wrapper {
+    height: 100vh;
+    width: 100%;
+    padding: 40px 100px 0 100px;
+  }
+
+  #error {
+    top: 79% !important;
+  }
+
+  .clock {
+    text-align: center;
+  }
+
+  .weather-container {
+    justify-content: center !important;
+  }
+  
   .main {
     flex-direction: column;
     align-items: center;
@@ -135,7 +147,6 @@ button:hover {
 }
 
 @media (max-width: 850px) {
-
   .header {
     flex-direction: column;
     align-items: center;
@@ -150,28 +161,33 @@ button:hover {
     order: 2;
   }
 
+  .clock {
+    padding-bottom: 0 !important;
+  }
+
   .weather-today p {
     width: 100% !important;
     text-align: center;
   }
 
   #error {
-    right: auto;
+    top: 92% !important;
+    right: auto !important;
+    font-size: 38px !important;
     padding: 0 20px;
   }
 
   .error-message {
     font-size: 80px;
   }
-}
 
-@media (max-width: 850px) {
   .weather-container {
     flex-direction: column;
   }
 
   .weather-today p {
     margin: 0 !important;
+    margin-bottom: -50px !important;
   }
 
   .weather-data {
@@ -183,58 +199,100 @@ button:hover {
   .weather-img {
     width: 400px;
     height: auto !important;
-    margin-bottom: -50px;
+    margin-bottom: -70px !important;
     margin-left: 0 !important;
   }
 
   .forecast-container {
-    flex-direction: column;
-    align-items: center;
     margin-top: 25px;
   }
 
   .card-temp {
     justify-content: center;
   }
-
-  #error {
-    top: 35%;
-    font-size: 25px;
-  }
 }
 
 @media (max-width: 600px) {
+  .forecast-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .blackout {
+    height: auto;
+  }  
+
   .error-message {
     font-size: 50px !important;
     padding: 50px 20px !important;
   }
+
+  #error {
+    width: max-content;
+  }
+
+}
+
+@media (max-height: 600px) {
+  .blackout {
+    height: auto;
+  }
+
+  .header {
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 450px) {
-
   #content-wrapper {
-    padding: 50px 0 50px;
+    padding: 40px 0 0px;
   }
 
   .search-input {
     width: 200px !important;
   }
 
+  .weather-today p {
+    font-size: 150px !important;
+    margin-bottom: -120px !important;
+    margin-top: -25px !important;
+  }
+
   .weather-wrapper:first-child {
     width: 310px;
   }
 
-  .weather-today p {
-    font-size: 250px !important;
-  }
-
   .weather-img {
     width: 300px;
+    margin-top: 0;
   }
 
   .map-container {
     width: 280px !important;
     height: 280px !important;
   }  
+}
+
+@media (max-width: 400px) {
+  #error {
+    top: 98% !important;
+    font-size: 31px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .search-input {
+    width: 165px !important;
+  }
+
+  #error {
+    top: 100% !important;
+    font-size: 28px !important;
+  }
+
+  .map-container {
+    width: 250px !important;
+    height: 250px !important;
+  }
 
 }
