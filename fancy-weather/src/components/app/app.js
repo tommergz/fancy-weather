@@ -8,7 +8,8 @@ import Map from '../map';
 import Error from '../error';
 import Loading from '../loading';
 import UndefinedCity from '../undefined-city';
-import apiService from '../../services/api-service'
+import images from '../../assets/img-obj';
+import apiService from '../../services/api-service';
 
 class App extends React.Component {
 
@@ -27,6 +28,7 @@ class App extends React.Component {
     forecast: [],
     celsius: true,
     time_zone: undefined,
+    backgroundImageIndex: 0,
     lang: "en",
     load: false,
     backgroundStyle: {},
@@ -42,20 +44,27 @@ class App extends React.Component {
 
   getRandomImage = async (time) => {
     try {
-      const imageUrl = await this.apiService.getImage(time);
+      let imgIndex = this.state.backgroundImageIndex;
+      while (imgIndex === this.state.backgroundImageIndex) {
+        imgIndex = Math.floor(Math.random() * Math.floor(5)) 
+      }
+      const imageUrl = images[time][imgIndex];
       if (imageUrl) {
         let img = new Image();
 
         img.onload = () => {
           const wrapperStyle = {
             backgroundSize: 'cover',
-            backgroundImage: `url(${imageUrl})`
+            backgroundImage: `url(${imageUrl})`,
+            backgroundPosition: 'center no-repeat',
+            transition: 'background 1s ease'
           }
           
           if (!this.state.load) { 
             document.body.classList.remove('loading'); 
             this.setState({
               backgroundStyle: wrapperStyle,
+              backgroundImageIndex: imgIndex,
               load: true,
               loading: false
             })
@@ -63,6 +72,7 @@ class App extends React.Component {
           else {
             this.setState({
               backgroundStyle: wrapperStyle,
+              backgroundImageIndex: imgIndex,
               buttonsDisabled: false,
               loading: false
             })

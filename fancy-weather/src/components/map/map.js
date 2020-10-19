@@ -1,5 +1,6 @@
 import React from 'react';
 import './map.css';
+import MapLoading from './map-loading/map-loading';
 import apiKeys from '../../services/apiKeys'
 import mapboxgl from 'mapbox-gl';
 
@@ -9,7 +10,10 @@ mapboxgl.accessToken = apiKeys.map;
 
 class Map extends React.Component {
   
-  map = '';
+  state = {
+    mapLangChanched: false,
+    lang: 'ru'
+  }
 
   newMap = () => {
     this.map = new mapboxgl.Map({
@@ -21,12 +25,13 @@ class Map extends React.Component {
   }
 
   langMap = (map, lang) => {
-    this.map.on('load', function() {    
+     this.map.on('load', () => {    
       map.getStyle().layers.forEach(function(thisLayer){
         if(thisLayer.id.indexOf('-label')>0){
           map.setLayoutProperty(thisLayer.id, 'text-field', ['get','name_' + lang])
         }
       });
+      setTimeout(() => this.setState((state) => ({mapLangChanched: true})), 500)
     });
   }
   
@@ -45,10 +50,6 @@ class Map extends React.Component {
     return `${sign}${degrees}° ${curtailedMinutes}'`;
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.lng !== nextProps.lng || this.props.lang !== nextProps.lang
-  }
-
   createMap() {
     if (this.props.lat) {
       this.newMap(); 
@@ -57,33 +58,57 @@ class Map extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.lng !== nextProps.lng || 
+    this.props.lang !== nextProps.lang ||
+    this.state.mapLangChanched !== nextState.mapLangChanched
+  }
+
   componentDidMount() {
     this.createMap()
   }
-
-  componentDidUpdate() {  
-    this.createMap()
+  
+  static getDerivedStateFromProps(props, state) {
+    if (props.lang !== state.lang || props.lng !== state.lng) {
+      return {
+        mapLangChanched: false,
+        lang: props.lang,
+        lng: props.lng
+      };
+    } else {
+      return {
+        mapLangChanched: true
+      }
+    }
+  }
+  
+  componentDidUpdate(prevProps, prevState) { 
+    if (this.props.lng !== prevProps.lng || this.props.lang !== prevProps.lang) {
+      this.createMap()
+    }
   }
     
   render() {
     const lat = this.coordsConversion(this.props.lat);
     const lng = this.coordsConversion(this.props.lng);
     const lang = t[this.props.lang];
-    // const render = this.state.render;
+    console.log(this.props.lng)
+    console.log(this.state.lng)
+    const vivsibility = this.state.mapLangChanched ? ' visible' : '';
 
     return (
       <div>
-        { lat !== "-NaN° NaN'" ?
           <div >          
             <div id="map-wrapper" className="map-wrapper">
-              <div ref={el => this.mapContainer = el} className='map-container' />
+              {!vivsibility ? <MapLoading /> : null}
+              <div ref={el => this.mapContainer = el} className={'map-container' + vivsibility} />
             </div>
             <div className="coords">
               <p>{lang['latitude']}: {lat}</p>
               <p>{lang['longitude']}: {lng}</p>
             </div>
-          </div> : null
-        }        
+          </div>
+   
       </div>  
     )
   }

@@ -1,3 +1,21 @@
+*{
+  margin:0;
+  padding:0;
+}
+
+@keyframes test {
+  from {
+  margin-top:25%;
+  margin-left:50%;
+  width: 0vw;
+  height: 0vh;}
+  to {
+    margin-top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;}
+  }
+
 #root {
   background-color: rgba(0, 0, 0, 0.6);
 }
@@ -254,8 +272,8 @@ button:hover {
 
   .weather-today p {
     font-size: 150px !important;
-    margin-bottom: -120px !important;
-    margin-top: -25px !important;
+    margin-bottom: -50px !important;
+    margin-top: -50px !important;
   }
 
   .weather-wrapper:first-child {
@@ -264,7 +282,11 @@ button:hover {
 
   .weather-img {
     width: 300px;
-    margin-top: 0;
+    margin-top: -70px !important;
+  }
+
+  .first-forecast-p {
+    margin-top: 50px !important;
   }
 
   .map-container {

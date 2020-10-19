@@ -1,6 +1,7 @@
 .map-wrapper {
   border: 1px solid white;
   border-radius: 0.5rem;
+  position: relative;
 }
 
 .map-container {
@@ -10,7 +11,7 @@
 
   filter: invert(1) hue-rotate(200deg);
   border: 1px solid white;
-
+  opacity: 0;
 }
 
 .coords {
@@ -26,4 +27,12 @@
   font-size: 25px;
   line-height: 30px;
   text-shadow: 0px 0px 24px rgba(0, 0, 0, 0.7);
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
 }

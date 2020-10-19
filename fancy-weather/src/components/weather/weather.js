@@ -23,7 +23,7 @@ class Weather extends React.Component {
               <div className="weather-data">
                 {/* <img className="weather-img" src={"http://openweathermap.org/img/wn/" + this.props.icon + "@2x.png"} alt="Forecast"></img> */}
                 <img className="weather-img" src={icons[icon]} alt="Forecast"></img>
-                <p>{lang.weather[weather]}</p>
+                <p className="first-forecast-p">{lang.weather[weather]}</p>
                 <p>{lang.feels_like}: {feels_like}°</p>   
                 <p>{lang.wind}: {wind} m/s</p>         
                 <p>{lang.humidity}: {humidity}%</p>           
